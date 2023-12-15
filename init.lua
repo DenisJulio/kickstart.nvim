@@ -210,7 +210,7 @@ require('lazy').setup({
     -- See `:help lualine.txt`
     opts = {
       options = {
-        icons_enabled = false,
+        icons_enabled = true,
         theme = 'catppuccin-mocha',
         component_separators = '|',
         section_separators = '',
@@ -260,6 +260,22 @@ require('lazy').setup({
     build = ':TSUpdate',
   },
 
+  {
+    'mfussenegger/nvim-jdtls',
+    event = "VeryLazy",
+  },
+
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    }
+  }
+
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -288,7 +304,6 @@ vim.wo.relativenumber = true
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
-
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
@@ -321,6 +336,17 @@ vim.o.termguicolors = true
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
+-- ------------------------------------
+--            My keymaps
+-- ------------------------------------
+--
+vim.keymap.set('n', '<C-n>', ':tabnew<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<S-h>', '<cmd> tabprevious <CR>', { desc = 'Go to the previous tab'})
+vim.keymap.set('n', '<S-l>', '<cmd> tabnext <CR>', { desc = 'Go to the next tab'})
+vim.keymap.set('n', '<leader>x', '<cmd> tabclose <CR>', { desc = 'Close the current tab'})
+
+-- ------------------------------------
+
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Remap for dealing with word wrap
@@ -576,7 +602,7 @@ local servers = {
   -- rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-
+  jdtls = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
@@ -603,6 +629,9 @@ mason_lspconfig.setup {
 
 mason_lspconfig.setup_handlers {
   function(server_name)
+    if server_name == 'jdtls' then
+      return
+    end
     require('lspconfig')[server_name].setup {
       capabilities = capabilities,
       on_attach = on_attach,
