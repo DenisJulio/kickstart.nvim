@@ -351,6 +351,8 @@ vim.keymap.set('n', '<C-n>', ':tabnew<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<S-h>', '<cmd> tabprevious <CR>', { desc = 'Go to the previous tab' })
 vim.keymap.set('n', '<S-l>', '<cmd> tabnext <CR>', { desc = 'Go to the next tab' })
 vim.keymap.set('n', '<leader>x', '<cmd> tabclose <CR>', { desc = 'Close the current tab' })
+vim.keymap.set('n', '<leader>fs', '<cmd> Neotree float toggle reveal <CR>',
+  { desc = 'Opens Neotree in a floating window' })
 
 -- ------------------------------------
 
