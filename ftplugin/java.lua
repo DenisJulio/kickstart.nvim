@@ -1,5 +1,5 @@
 -- Modules
-local util = require("util")
+local util = require("lsp-util")
 local jdtls = require("jdtls")
 
 -- Variables

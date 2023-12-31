@@ -123,13 +123,42 @@ vim.o.termguicolors = true
 -- ------------------------------------
 --            My keymaps
 -- ------------------------------------
---
+
 vim.keymap.set('n', '<C-n>', ':tabnew<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<S-h>', '<cmd> tabprevious <CR>', { desc = 'Go to the previous tab' })
 vim.keymap.set('n', '<S-l>', '<cmd> tabnext <CR>', { desc = 'Go to the next tab' })
 vim.keymap.set('n', '<leader>x', '<cmd> tabclose <CR>', { desc = 'Close the current tab' })
 vim.keymap.set('n', '<leader>fs', '<cmd> Neotree float toggle reveal <CR>',
   { desc = 'Opens Neotree in a floating window' })
+
+-- ------------------------------------
+--           nvim dap keymaps 
+-- ------------------------------------
+
+vim.keymap.set('n', '<F5>', function() require('dap').continue() end)
+vim.keymap.set('n', '<F10>', function() require('dap').step_over() end)
+vim.keymap.set('n', '<F11>', function() require('dap').step_into() end)
+vim.keymap.set('n', '<F12>', function() require('dap').step_out() end)
+vim.keymap.set('n', '<Leader>b', function() require('dap').toggle_breakpoint() end)
+vim.keymap.set('n', '<Leader>B', function() require('dap').set_breakpoint() end)
+vim.keymap.set('n', '<Leader>lp',
+  function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
+vim.keymap.set('n', '<Leader>dr', function() require('dap').repl.open() end)
+vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end)
+vim.keymap.set({ 'n', 'v' }, '<Leader>dh', function()
+  require('dap.ui.widgets').hover()
+end)
+vim.keymap.set({ 'n', 'v' }, '<Leader>dp', function()
+  require('dap.ui.widgets').preview()
+end)
+vim.keymap.set('n', '<Leader>df', function()
+  local widgets = require('dap.ui.widgets')
+  widgets.centered_float(widgets.frames)
+end)
+vim.keymap.set('n', '<Leader>ds', function()
+  local widgets = require('dap.ui.widgets')
+  widgets.centered_float(widgets.scopes)
+end)
 
 -- ------------------------------------
 
@@ -373,8 +402,8 @@ mason_lspconfig.setup_handlers {
       return
     end
     require('lspconfig')[server_name].setup {
-      capabilities = require("util").capabilities,
-      on_attach = require("util").on_attach,
+      capabilities = require("lsp-util").capabilities,
+      on_attach = require("lsp-util").on_attach,
       settings = servers[server_name],
       filetypes = (servers[server_name] or {}).filetypes,
     }
