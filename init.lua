@@ -83,7 +83,7 @@ vim.wo.relativenumber = true
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.smartindent = true
-vim.opt.tabstop = 2
+vim.opt.tabstop = 4
 vim.opt.softtabstop = 2
 
 -- Enable mouse mode
@@ -130,9 +130,10 @@ vim.keymap.set('n', '<S-l>', '<cmd> tabnext <CR>', { desc = 'Go to the next tab'
 vim.keymap.set('n', '<leader>x', '<cmd> tabclose <CR>', { desc = 'Close the current tab' })
 vim.keymap.set('n', '<leader>fs', '<cmd> Neotree float toggle reveal <CR>',
   { desc = 'Opens Neotree in a floating window' })
+vim.keymap.set('n', '<leader>fm', ':Fmt<CR>')
 
 -- ------------------------------------
---           nvim dap keymaps 
+--           nvim dap keymaps
 -- ------------------------------------
 
 vim.keymap.set('n', '<F5>', function() require('dap').continue() end)
@@ -367,11 +368,13 @@ require('mason-lspconfig').setup()
 --  define the property 'filetypes' to the map in question.
 local servers = {
   -- clangd = {},
-  -- gopls = {},
+  gopls = {
+    templateExtensions = { "html" },
+  },
   -- pyright = {},
   -- rust_analyzer = {},
   -- tsserver = {},
-  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
+  html = { filetypes = { 'html', 'twig', 'hbs' } },
   gradle_ls = {
 
   },
