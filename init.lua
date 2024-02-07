@@ -72,6 +72,9 @@ require('lazy').setup("custom.plugins")
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 
+-- Colorscheme
+vim.cmd[[colorscheme catppuccin-mocha]]
+
 -- Set highlight on search
 vim.o.hlsearch = false
 
@@ -125,9 +128,9 @@ vim.o.termguicolors = true
 -- ------------------------------------
 
 vim.keymap.set('n', '<C-n>', ':tabnew<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<S-h>', '<cmd> tabprevious <CR>', { desc = 'Go to the previous tab' })
-vim.keymap.set('n', '<S-l>', '<cmd> tabnext <CR>', { desc = 'Go to the next tab' })
-vim.keymap.set('n', '<leader>x', '<cmd> tabclose <CR>', { desc = 'Close the current tab' })
+vim.keymap.set('n', '<S-h>', ':BufferLineCyclePrev<CR>', { desc = 'Go to the previous buffer' })
+vim.keymap.set('n', '<S-l>', ':BufferLineCycleNext<CR>', { desc = 'Go to the next buffer' })
+vim.keymap.set('n', '<leader>x', ':bd<CR>', { desc = 'Close the current buffer' })
 vim.keymap.set('n', '<leader>fs', '<cmd> Neotree float toggle reveal <CR>',
   { desc = 'Opens Neotree in a floating window' })
 vim.keymap.set('n', '<leader>fm', ':Fmt<CR>')
@@ -464,6 +467,9 @@ cmp.setup {
     { name = 'path' },
   },
 }
+
+vim.opt.termguicolors = true
+require("bufferline").setup{}
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
