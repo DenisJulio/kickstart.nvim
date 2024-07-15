@@ -13,7 +13,7 @@ local workspace_folder = home .. "/.cache/jdtls/workspace" .. project_name
 local path_to_mason_packages = home .. "/.local/share/nvim/mason/packages"
 local path_to_jdtls = path_to_mason_packages .. "/jdtls"
 local lombok_path = path_to_jdtls .. "/lombok.jar"
-local path_to_jar = path_to_jdtls .. "/plugins/org.eclipse.equinox.launcher_1.6.600.v20231106-1826.jar"
+local path_to_jar = path_to_jdtls .. "/plugins/org.eclipse.equinox.launcher_1.6.700.v20231214-2017.jar"
 
 
 -- Configuration

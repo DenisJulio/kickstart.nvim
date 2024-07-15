@@ -390,6 +390,7 @@ local servers = {
       -- diagnostics = { disable = { 'missing-fields' } },
     },
   },
+  terraformls = {},
 }
 
 -- Setup neovim lua configuration
