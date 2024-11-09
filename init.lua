@@ -134,6 +134,7 @@ vim.keymap.set('n', '<leader>x', ':bd<CR>', { desc = 'Close the current buffer' 
 vim.keymap.set('n', '<leader>fs', '<cmd> Neotree float toggle reveal <CR>',
   { desc = 'Opens Neotree in a floating window' })
 vim.keymap.set('n', '<leader>fm', ':Fmt<CR>')
+vim.keymap.set('n', '<leader>tm', ':MarkdownPreviewToggle<CR>')
 
 -- ------------------------------------
 --           nvim dap keymaps
@@ -338,6 +339,7 @@ vim.defer_fn(function()
   }
 end, 0)
 
+--[[
 -- document existing key chains
 require('which-key').register {
   ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
@@ -355,6 +357,7 @@ require('which-key').register({
   ['<leader>'] = { name = 'VISUAL <leader>' },
   ['<leader>h'] = { 'Git [H]unk' },
 }, { mode = 'v' })
+  ]]--
 
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
@@ -374,6 +377,7 @@ local servers = {
   gopls = {
     templateExtensions = { "html" },
   },
+  templ = {},
   -- pyright = {},
   -- rust_analyzer = {},
   -- tsserver = {},
