@@ -72,6 +72,9 @@ require('lazy').setup("custom.plugins")
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 
+-- Disbale codeium default keybindings
+vim.g.codeium_disable_bindings = 1
+
 -- Colorscheme
 vim.cmd[[colorscheme catppuccin-mocha]]
 
@@ -381,7 +384,8 @@ local servers = {
   -- pyright = {},
   -- rust_analyzer = {},
   -- tsserver = {},
-  html = { filetypes = { 'html', 'twig', 'hbs' } },
+  html = { filetypes = { 'html', 'twig', 'hbs', 'templ' } },
+  htmx = { filetypes = { 'html', 'templ' } },
   gradle_ls = {
 
   },
@@ -437,12 +441,17 @@ cmp.setup {
   completion = {
     completeopt = 'menu,menuone,noinsert',
   },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
   mapping = cmp.mapping.preset.insert {
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete {},
+    ['<C-q>'] = cmp.mapping.abort(),
+    ['<C-j>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
@@ -474,7 +483,29 @@ cmp.setup {
 }
 
 vim.opt.termguicolors = true
-require("bufferline").setup{}
+require("bufferline").setup {}
+
+require('lspconfig.ui.windows').default_options.border = 'single'
+
+-- trying to add border to hover documentation
+local _border = "single"
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+  vim.lsp.handlers.hover, {
+    border = _border
+  }
+)
+
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+  vim.lsp.handlers.signature_help, {
+    border = _border
+  }
+)
+
+vim.diagnostic.config({
+  float = {
+    border = _border
+  }
+})
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
